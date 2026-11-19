@@ -221,7 +221,7 @@ export default function Reel({ clips }: { clips: Clip[] }) {
 
       <div className="mv-stage" inert={!live}>
         <header className="mv-top">
-          <Link className="mv-logo" href="/movimento" aria-label="FitMatch — início">
+          <Link className="mv-logo" href="/" aria-label="FitMatch — início">
             <Mark />
             <b>FitMatch</b>
           </Link>

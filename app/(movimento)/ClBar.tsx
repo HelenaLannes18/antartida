@@ -22,7 +22,7 @@ export default function ClBar() {
   return (
     <header className="mx-cl-bar">
       <div className="l">
-        <Link className="brand" href="/movimento" aria-label="FitMatch — início">
+        <Link className="brand" href="/" aria-label="FitMatch — início">
           <svg viewBox="0 0 56 52" aria-hidden="true">
             <circle cx="20" cy="26" r="14" fill="none" stroke="currentColor" strokeWidth="3" />
             <circle cx="36" cy="26" r="14" fill="none" stroke="currentColor" strokeWidth="3" />

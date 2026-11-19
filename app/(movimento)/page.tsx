@@ -133,7 +133,7 @@ export default function Movimento() {
 
             <nav className="mx-ft-nav" aria-label="Explorar">
               <small>Explorar</small>
-              <Link href="/movimento">Início</Link>
+              <Link href="/">Início</Link>
               <Link href="/esportes">Esportes</Link>
               <a href="#world">Comunidade</a>
               <a href="#como-funciona">Como funciona</a>

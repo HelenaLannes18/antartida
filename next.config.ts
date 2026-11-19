@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // o conteúdo de /movimento agora é a página principal
+  async redirects() {
+    return [{ source: "/movimento", destination: "/", permanent: false }];
+  },
 };
 
 export default nextConfig;

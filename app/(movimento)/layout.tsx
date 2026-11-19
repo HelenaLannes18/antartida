@@ -56,7 +56,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "FitMatch — Movimento",
+  title: "FitMatch",
   description: "Trilha, surfe, neve, pista e academia: o mundo é o seu lugar de treinar. Encontre o esporte e as pessoas certas.",
 };
 

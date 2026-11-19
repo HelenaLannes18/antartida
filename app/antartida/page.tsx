@@ -1,5 +1,11 @@
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import ScrollEffects from "./ScrollEffects";
+
+export const metadata: Metadata = {
+  title: "Antártida — Expedições",
+  description: "Luxo e aventura no lugar mais remoto da Terra.",
+};
 
 const ACCENT = "#C9580B";
 const INK = "#1C2340";

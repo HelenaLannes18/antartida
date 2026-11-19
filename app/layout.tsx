@@ -22,8 +22,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Antártida — Expedições",
-  description: "Luxo e aventura no lugar mais remoto da Terra.",
+  title: "FitMatch",
+  description: "Encontre o esporte e as pessoas certas para treinar.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
