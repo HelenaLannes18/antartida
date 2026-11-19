@@ -1,0 +1,100 @@
+/* Hero cinematográfico (montagem de vídeos) — todas as classes têm o prefixo .mv
+   Pré-loader branco: um cursor aparece, o texto é digitado letra a letra e o branco se abre sobre o hero
+   que já estava montado por baixo (título, HUD e vídeo). Título largo e pesado, HUD em mono de caixa alta
+   com colchetes colados, réguas nas laterais e uma fita cassete no canto. */
+
+.mv-root{--accent:#05caad;--cursor:#05b79d;--paper:#fff;--gut:clamp(22px,5.1vw,98px);--pad:clamp(20px,3.1vw,60px);--rh:clamp(150px,32svh,300px);background:#05080a}
+.mv{position:relative;height:100svh;min-height:540px;overflow:hidden;overflow:clip;isolation:isolate;background:#05080a;color:#fff;font-family:var(--font-grotesk),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.mv *{box-sizing:border-box}
+.mv a,.mv a:hover{color:inherit;text-decoration:none}
+.mv :where(button){font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mv h1,.mv p{margin:0}
+.mv :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.mv-stage,.mv-hero{display:contents}
+.mv-nav,.mv-cap,.mv-tagline,.mv-play,.mv-tape-tip,.mv-pre{font-family:var(--font-hero-mono),var(--font-mono),ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:400;text-transform:uppercase}
+
+/* ---------- vídeos: um aparece enquanto o outro já carrega o próximo corte ---------- */
+.mv-reel{position:absolute;inset:0;z-index:0;background:#05080a}
+.mv-vid{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;opacity:0;transform:scale(1.08);pointer-events:none;will-change:transform,opacity}
+.mv-vid[data-state="on"]{opacity:1;z-index:2;transition:opacity .12s linear;animation:mv-push 4s cubic-bezier(.22,.6,.2,1) both}
+.mv-vid[data-state="out"]{opacity:0;z-index:1;transform:none;transition:opacity 0s linear .16s}
+@keyframes mv-push{from{transform:scale(1.08)}to{transform:scale(1)}}
+.mv-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(0,0,0,.38) 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0,transparent 24%),linear-gradient(0deg,rgba(0,0,0,.6) 0,transparent 48%),rgba(0,0,0,.26)}
+
+/* ---------- topo ---------- */
+.mv-top{position:absolute;inset:0 0 auto 0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:clamp(14px,1.37vw,28px) calc(var(--pad) + .26vw) 0 var(--pad)}
+.mv-logo{display:flex;align-items:center;gap:clamp(7px,.6vw,11px)}
+.mv-logo svg{width:clamp(34px,2.3vw,44px);height:auto;display:block}
+.mv-logo b{font-family:var(--font-archivo),var(--font-grotesk),system-ui,sans-serif;font-weight:800;font-size:clamp(15px,1.2vw,23px);line-height:1;letter-spacing:.02em;text-transform:uppercase}
+.mv-nav{display:flex;gap:clamp(18px,2.7vw,52px);font-size:clamp(12px,1vw,19px);line-height:1;letter-spacing:0;text-shadow:0 1px 14px rgba(0,0,0,.45)}
+.mv-nav a::before,.mv-nav a::after{display:inline-block;transition:transform .25s ease}
+.mv-nav a::before{content:"["}
+.mv-nav a::after{content:"]"}
+.mv-nav a:hover::before{transform:translateX(-5px)}
+.mv-nav a:hover::after{transform:translateX(5px)}
+
+/* ---------- réguas nas laterais: enchem conforme a montagem avança ---------- */
+.mv-ruler{position:absolute;top:51.4%;height:var(--rh);margin-top:calc(var(--rh) / -2);z-index:5;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.mv-ruler-l{left:clamp(14px,1.9vw,36px);align-items:flex-start}
+.mv-ruler-r{right:clamp(14px,1.9vw,36px);align-items:flex-end}
+.mv-tick{display:block;width:clamp(10px,1.1vw,21px);height:1px;background:#fff;opacity:calc((.28 + .62 * clamp(0, calc((var(--p,1) * var(--ticks,24) - var(--i,0)) * 4), 1)) * var(--w,1));transition:opacity .5s ease calc(var(--i,0) * 22ms)}
+.mv-tick:nth-child(odd){--w:.62}
+.mv-tick-top{width:clamp(22px,2.4vw,46px);height:1.5px;background:var(--accent);opacity:1}
+
+/* ---------- título, legenda e frase ---------- */
+.mv-title{position:absolute;left:var(--gut);bottom:max(112px,27.4svh);z-index:5;font-family:var(--font-archivo),var(--font-grotesk),system-ui,sans-serif;font-weight:800;font-size:clamp(2.35rem,3.32vw,5.6rem);line-height:1.02;letter-spacing:0;text-transform:uppercase;text-shadow:0 2px 28px rgba(0,0,0,.35)}
+.mv-line{display:block}
+.mv-cap{position:absolute;right:var(--gut);top:calc(51.4% - var(--rh) / 2 - 1.1em);z-index:5;display:flex;flex-direction:column;align-items:flex-end;text-align:right;font-size:clamp(11px,1vw,19px);line-height:1.26;letter-spacing:0;text-shadow:0 1px 14px rgba(0,0,0,.45);animation:mv-swap .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes mv-swap{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mv-tagline{position:absolute;right:var(--gut);bottom:clamp(0px,.12vw,3px);z-index:5;max-width:min(46ch,60vw);text-align:right;font-size:clamp(11px,1vw,19px);line-height:1.5;letter-spacing:.05em;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+
+/* ---------- fita cassete (liga e desliga a trilha) ---------- */
+.mv-tape{position:absolute;right:clamp(14px,2.5vw,48px);bottom:clamp(52px,3.1vw,60px);z-index:8;width:clamp(78px,5.9vw,112px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.mv-tape svg{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
+.mv-tape:hover{transform:translateY(-3px) rotate(-2.5deg)}
+.mv-hub{transform-box:fill-box;transform-origin:center}
+.mv-tape.is-on .mv-hub{animation:mv-spin 2.6s linear infinite}
+@keyframes mv-spin{to{transform:rotate(360deg)}}
+.mv-tape-tip{position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);white-space:nowrap;font-size:clamp(11px,1vw,19px);line-height:1;letter-spacing:0;opacity:0;transition:opacity .25s ease;pointer-events:none;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.mv-tape-tip::before{content:"["}
+.mv-tape-tip::after{content:"]"}
+.mv-tape:hover .mv-tape-tip,.mv-tape:focus-visible .mv-tape-tip{opacity:1}
+
+/* só aparece para quem pede menos movimento: dá para parar a montagem */
+.mv-play{position:absolute;left:var(--gut);bottom:clamp(0px,.12vw,3px);z-index:8;font-size:clamp(11px,1vw,19px);line-height:1.5;letter-spacing:0;white-space:pre;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+
+/* ---------- pré-loader ---------- */
+.mv-pre{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:var(--paper);color:#0a0a0a;font-size:clamp(11.5px,.92vw,19px);line-height:1.66;letter-spacing:0;transition:opacity .9s cubic-bezier(.4,0,.2,1),visibility 0s linear .9s}
+.is-live .mv-pre{opacity:0;visibility:hidden;pointer-events:none}
+.mv-pre p{padding:0 24px;text-align:center}
+.mv-pre-line{display:block;white-space:pre}
+.mv-pre-rest{visibility:hidden}
+/* o cursor ocupa o lugar de uma letra, como no terminal: a linha se ajusta quando ele passa para a seguinte */
+.mv-cur{display:inline-block;width:.6em;height:1.03em;vertical-align:-.286em;background:var(--cursor)}
+.mv-cur-lone{position:absolute;left:50%;top:calc(50% - 1.45vw);transform:translate(-50%,-50%)}
+.mv-cur.is-wait{animation:mv-blink 1s steps(1) infinite}
+@keyframes mv-blink{50%{opacity:0}}
+
+/* ---------- telas estreitas ---------- */
+@media (max-width:760px){
+  .mv{--gut:22px;--pad:20px}
+  .mv-ruler{display:none}
+  .mv-nav a:last-child{display:none}
+  .mv-hero{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(max(88px,13svh) + 28px);z-index:5;display:flex;flex-direction:column;gap:16px}
+  .mv-title{position:static;font-size:clamp(2.2rem,11.2vw,3.7rem)}
+  .mv-cap{position:static;order:-1;flex-direction:row;align-items:baseline;gap:1.3em;font-size:12px;text-align:left}
+  .mv-tagline{left:var(--gut);right:auto;bottom:22px;max-width:calc(100% - var(--gut) - 104px);text-align:left;font-size:11px}
+  .mv-tape{width:76px;right:16px;bottom:16px}
+  .mv-tape-tip{display:none}
+  .mv-play{bottom:76px}
+}
+
+/* menos movimento: sem zoom e sem giro — a montagem continua, e há botão para pausar */
+@media (prefers-reduced-motion:reduce){
+  .mv-vid[data-state="on"]{animation:none;transform:none}
+  .mv-cap{animation:none}
+  .mv-tick{transition:none}
+  .mv-cur.is-wait{animation:none}
+  .mv-tape.is-on .mv-hub{animation:none}
+  .mv-tape,.mv-nav a::before,.mv-nav a::after{transition:none}
+}

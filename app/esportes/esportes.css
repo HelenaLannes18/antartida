@@ -1,0 +1,121 @@
+/* Hero de esportes — todas as classes têm o prefixo .es
+   Paleta (referência de corrida): azul-marinho #081a28, prata #b6baba, turquesa #05caad (uso pontual) */
+
+.es-root{--navy:#081a28;--silver:#b6baba;--teal:#05caad;background:#02070c}
+.es{position:relative;height:100svh;min-height:560px;overflow:hidden;overflow:clip;container-type:size;isolation:isolate;background:#02070c;color:#fff;font-family:var(--font-inter),system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+.es *{box-sizing:border-box}
+.es a,.es a:hover{color:inherit;text-decoration:none}
+.es button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.es h1,.es p{margin:0}
+.es :focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+
+/* ---------- mídia (vídeo ou foto em tela cheia) ---------- */
+.es-media{position:absolute;inset:-3%;transform:translate(calc(var(--mx,0)*-12px),calc(var(--my,0)*-7px)) scale(calc(1 + var(--hold,0)*.07));will-change:transform;transition:filter .5s ease}
+.es-video,.es-photo{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.es-photo{background-size:cover;background-position:center;animation:es-ken 22s ease-in-out infinite alternate}
+@keyframes es-ken{from{transform:scale(1)}to{transform:scale(1.09) translate(-1%,-.6%)}}
+.is-closing .es-media,.is-opening .es-media{filter:blur(8px) brightness(.8)}
+
+/* ---------- cena desenhada (reserva quando não há foto/vídeo) ---------- */
+.es-art{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(56.25cqw,100cqh);transform:translate(-50%,-50%) scale(calc(1 + var(--hold,0)*.05));transition:filter .5s ease;will-change:transform}
+.is-closing .es-art,.is-opening .es-art{filter:blur(7px) brightness(.8)}
+.es-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.es-par{transform:translate(calc(var(--mx,0)*var(--px,0)*1px),calc(var(--my,0)*var(--py,0)*1px))}
+.es-fg-move{transform:translate(calc(var(--mx,0)*14px),calc(var(--my,0)*8px - var(--hold,0)*6px))}
+.es-fg{transform-box:view-box;transform-origin:800px 900px;animation:es-sway 4.6s ease-in-out infinite alternate}
+@keyframes es-sway{from{transform:rotate(-.5deg) translateY(0)}to{transform:rotate(.5deg) translateY(5px)}}
+.is-hold .es-fg{animation-duration:.5s}
+
+/* ---------- camadas de acabamento ---------- */
+.es-layer{position:absolute;inset:0;pointer-events:none}
+.es-grade{z-index:1;background:linear-gradient(90deg,rgba(3,10,17,.68) 0%,rgba(3,10,17,.22) 36%,transparent 58%),linear-gradient(180deg,rgba(3,10,17,.42) 0%,transparent 20%,transparent 68%,rgba(3,10,17,.5) 100%)}
+.es-night-ov{z-index:1;background:#0b1d44;mix-blend-mode:multiply;opacity:0;transition:opacity 1s ease}
+.es-night .es-night-ov{opacity:.7}
+.es-streaks{z-index:2;opacity:calc(var(--hold,0)*.4);background:repeating-conic-gradient(from 0deg at 50% 52%,rgba(255,255,255,0) 0 1.4deg,rgba(255,255,255,.16) 1.7deg 1.95deg,rgba(255,255,255,0) 2.3deg 4.1deg);-webkit-mask-image:radial-gradient(circle at 50% 52%,transparent 30%,#000 82%);mask-image:radial-gradient(circle at 50% 52%,transparent 30%,#000 82%)}
+.es-vig{z-index:2;background:radial-gradient(ellipse at 50% 54%,transparent 54%,rgba(0,0,0,.5) 100%)}
+.es-grain{z-index:3;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:es-grain .7s steps(5) infinite}
+@keyframes es-grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+.es-dim{z-index:4;background:#000;opacity:.56;transition:opacity 1.8s ease}
+.is-play .es-dim{opacity:0}
+
+/* ---------- piscada (pálpebras) ---------- */
+.es-lid{position:absolute;left:-6%;right:-6%;height:57%;background:#000;z-index:6;pointer-events:none;will-change:transform}
+.es-lid-t{top:0;transform:translateY(-104%);border-radius:0 0 50% 50%/0 0 26% 26%;box-shadow:0 14px 46px 22px #000;transition:transform .76s cubic-bezier(.3,.1,.3,1)}
+.es-lid-b{bottom:0;transform:translateY(104%);border-radius:50% 50% 0 0/26% 26% 0 0;box-shadow:0 -14px 46px 22px #000;transition:transform .76s cubic-bezier(.3,.1,.3,1)}
+.is-closing .es-lid-t,.is-closing .es-lid-b{transform:none;transition-duration:.52s;transition-timing-function:cubic-bezier(.6,0,.8,.4)}
+
+/* ---------- navegação ---------- */
+.es-nav{position:absolute;inset:0 0 auto 0;z-index:7;display:flex;justify-content:space-between;align-items:flex-start;padding:max(18px,3cqh) 3.6cqw 0}
+.es-ticks{display:flex;align-items:flex-end;margin-left:-6px}
+.es-tick{width:22px;height:34px;display:flex;align-items:flex-end;justify-content:center}
+.es-tick i{display:block;width:1.5px;height:9px;background:rgba(255,255,255,.5);transition:height .4s ease,background .4s ease}
+.es-tick:hover i{background:#fff}
+.es-tick[aria-selected="true"] i{height:20px;background:#fff}
+.es-links{display:flex;align-items:center;gap:clamp(18px,2.4cqw,38px);padding-top:3px;font-size:12px;letter-spacing:.02em;color:rgba(255,255,255,.9);text-shadow:0 1px 10px rgba(3,10,17,.7)}
+.es-links a{transition:color .2s ease}
+.es-links a:hover{color:#fff}
+.es-cur{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.62)}
+.es-cur::after{content:"";width:9px;height:1px;background:currentColor}
+
+/* ---------- título ---------- */
+.es-copy{position:absolute;left:3.6cqw;top:max(84px,12cqh);z-index:5;pointer-events:none}
+.es-title{display:flex;flex-direction:column;font-family:var(--font-anton),Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;font-size:min(19cqh,29cqw);line-height:1.02;letter-spacing:.006em;background:linear-gradient(180deg,#fff 30%,#cdd2d3 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 22px rgba(3,10,17,.4));opacity:1;transition:opacity 1.6s ease}
+.is-intro .es-title{opacity:.34}
+.es-tag{margin-top:clamp(12px,2.2cqh,22px);font-size:12.5px;line-height:1.4;color:#d9dcdc;text-shadow:0 1px 14px rgba(3,10,17,.85),0 0 2px rgba(3,10,17,.5);opacity:1;transition:opacity 1.6s ease}
+.is-intro .es-tag{opacity:.3}
+
+/* ---------- dica "segure" ---------- */
+.es-chip{position:absolute;left:50%;top:58cqh;z-index:6;display:inline-flex;align-items:center;gap:7px;padding:6px 13px 6px 10px;border-radius:999px;background:rgba(182,186,186,.34);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:11.5px;font-weight:500;pointer-events:none;white-space:nowrap;opacity:0;transform:translateX(-50%);animation:es-chip .7s ease 1.6s forwards}
+.is-hold .es-chip{opacity:0!important;transition:opacity .3s}
+.is-intro .es-chip{display:none}
+@keyframes es-chip{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* ---------- balões de chat ---------- */
+.es-chat{position:absolute;right:3.6cqw;bottom:calc(max(18px,3.4cqh) + 66px);z-index:7;display:flex;flex-direction:column;align-items:flex-end;gap:9px;max-width:min(300px,62cqw);pointer-events:none}
+.es-bub{background:#fff;color:#0b1620;font-size:12.5px;font-weight:500;line-height:1.25;padding:9px 14px;border-radius:9px;box-shadow:0 8px 28px rgba(0,0,0,.3);transform-origin:100% 100%;animation:es-pop .45s cubic-bezier(.2,.9,.25,1.25) both}
+.es-bub.typing{display:flex;gap:4px;padding:11px 14px;background:rgba(255,255,255,.94)}
+.es-bub.typing i{width:5px;height:5px;border-radius:50%;background:#6f808a;animation:es-dot 1s ease-in-out infinite}
+.es-bub.typing i:nth-child(2){animation-delay:.15s}
+.es-bub.typing i:nth-child(3){animation-delay:.3s}
+.is-intro .es-bub{opacity:.7}
+@keyframes es-pop{from{opacity:0;transform:translateY(10px) scale(.85)}to{opacity:1;transform:none}}
+@keyframes es-dot{0%,60%,100%{opacity:.35;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+
+/* ---------- botão de começar (só o triângulo, como na referência) ---------- */
+.es-play{position:absolute;left:50%;top:50%;z-index:8;width:96px;height:96px;margin:-48px 0 0 -48px;display:grid;place-items:center;border-radius:50%;transition:opacity .7s ease,transform .7s ease,background .3s ease}
+.es-play svg{margin-left:3px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.45));transition:transform .3s ease}
+.es-play:hover svg{transform:scale(1.18)}
+.is-play .es-play{opacity:0;transform:scale(.7);pointer-events:none;visibility:hidden;transition:opacity .7s ease,transform .7s ease,visibility 0s .7s}
+
+/* ---------- barra inferior ---------- */
+.es-bar{position:absolute;inset:auto 0 0 0;z-index:7;display:flex;align-items:center;gap:clamp(12px,2cqw,28px);padding:0 3.6cqw max(18px,3.4cqh)}
+.es-logo{display:flex;align-items:center;gap:10px;flex:none}
+.es-logo svg{width:54px;height:50px;display:block}
+.es-logo b{font-family:var(--font-anton),Impact,sans-serif;font-weight:400;font-size:17px;letter-spacing:.09em;text-transform:uppercase}
+.es-line{position:relative;flex:1;height:2px;border-radius:2px;background:rgba(182,186,186,.34)}
+.es-line i{position:absolute;inset:0;border-radius:2px;background:linear-gradient(90deg,#fff 70%,var(--teal));transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.es-line u{position:absolute;top:-3px;width:1px;height:8px;background:rgba(255,255,255,.4)}
+.es-ic{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;transition:background .2s ease}
+.es-ic:hover{background:rgba(255,255,255,.14)}
+
+/* ---------- telas estreitas ---------- */
+@container (max-width:760px){
+  .es-links a{display:none}
+  .es-logo b{display:none}
+  .es-copy{top:max(76px,11cqh)}
+  .es-chat{bottom:calc(max(18px,3.4cqh) + 62px);max-width:56cqw}
+  .es-chip{top:54cqh}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .es-grain{animation:none}
+  .es-photo{animation:none}
+  .es-streaks{display:none}
+  .es-fg{animation:none}
+  /* a "piscada" vira um escurecer suave, sem movimento das pálpebras */
+  .es-lid{opacity:0;transform:none;border-radius:0;box-shadow:none;transition:opacity .5s ease}
+  .es-lid-t{height:100%}
+  .es-lid-b{display:none}
+  .is-closing .es-lid{opacity:1;transition-duration:.4s}
+  .is-closing .es-media,.is-opening .es-media,.is-closing .es-art,.is-opening .es-art{filter:none}
+}

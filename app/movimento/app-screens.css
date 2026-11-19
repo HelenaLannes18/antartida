@@ -1,0 +1,10 @@
+/* Telas do protótipo do app dentro do vidro do celular 3D (ver proto.tsx e Tour.tsx).
+   A tela é desenhada no tamanho do protótipo (390×844 px) e escalada por transform para caber no vidro:
+   --s = largura do vidro (95,8u) ÷ 390px, tirando a unidade com tan(atan2()). Os estilos da tela são inline, os do protótipo. */
+
+.mxph-app{padding:0;display:block;background:#000}
+.ap{--s:tan(atan2(calc(var(--u) * 95.8),390px));position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;transform:scale(var(--s));overflow:hidden;-webkit-font-smoothing:antialiased}
+/* o protótipo não usa box-sizing global; a página usa border-box em tudo */
+.mxph-app .ap *{box-sizing:content-box}
+.ap a{color:#05caad}
+.ap a,.ap button{text-decoration:none}

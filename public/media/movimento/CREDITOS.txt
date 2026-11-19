@@ -1,0 +1,17 @@
+Filmagens da página /movimento
+
+Os cinco vídeos desta pasta vêm do Mixkit (https://mixkit.co), na versão 720p, sob a
+"Mixkit Stock Video Free License" (https://mixkit.co/license/#videoFree): uso comercial e
+não comercial, sem atribuição obrigatória (o Mixkit só agradece o crédito, quando possível).
+
+  trilha.mp4                 Mixkit #44363  "Jogging in the serene beauty of nature"
+  academia-cordas.mp4        Mixkit #52317  treino com cordas navais (battle ropes) em academia
+  academia-agachamento.mp4   Mixkit #44438  "Woman and man doing squats together in a gym"
+  montanha.mp4               Mixkit #12970  "Courageous hiker spreads arms over mountain summit"
+  paddle.mp4                 Mixkit #28744  "Woman wandering in nature on a paddleboard"
+
+Download de cada um: https://assets.mixkit.co/videos/<id>/<id>-720.mp4
+As capas (.jpg) são quadros extraídos desses mesmos vídeos.
+
+A montagem também usa quatro vídeos que já estavam em /media/esportes
+(surfe, ciclismo, esqui e corrida).

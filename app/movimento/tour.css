@@ -1,0 +1,94 @@
+/* Tour do aplicativo (fundo branco) — prefixo .tx
+   Uma pista "sticky" com um capítulo por tela do app: o celular fica no centro e troca de tela a cada capítulo,
+   o texto entra à esquerda e trechos ampliados da própria tela flutuam à direita. As telas vêm do protótipo (proto.tsx).
+   O tempo vem de useTimeline: --p/--k (progresso), --q{j} (avanço no capítulo) e --e{j}/--x{j} (entrada/saída do capítulo j). */
+
+.tx{--p:0;--k:0;--q0:.5;--q1:.5;--q2:.5;--q3:.5;--q4:.5;--q5:.5;--e0:1;--e1:0;--e2:0;--e3:0;--e4:0;--e5:0;--x0:0;--x1:0;--x2:0;--x3:0;--x4:0;--x5:0;
+  --ink:#22313a;--soft:#7b8890;--mute:#b6bec3;--line:#dde2e5;--paper:#fbfbfa;--teal:#05caad;position:relative;height:calc(var(--len,9) * 100vh);background:var(--paper);color:var(--ink);font-family:var(--font-grotesk),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.tx *{box-sizing:border-box}
+.tx :where(h2,p,ul){margin:0;padding:0}
+.tx-stage{--w:min(36vh,22vw);--cx:60%;--cy:48%;--gut:clamp(18px,2.6vw,48px);--top:clamp(88px,15vh,160px);
+  --cs:clamp(.6,min(tan(atan2(100vw,1520px)),tan(atan2(100vh,760px))),1.12);
+  position:sticky;top:0;height:100vh;overflow:hidden;background:var(--paper);perspective:1800px;perspective-origin:var(--cx) var(--cy)}
+/* ---------- texto do capítulo: igual à seção Ritmo (palavra gigante, rótulo entre colchetes e frase que escurece) ---------- */
+.tx-copy{position:absolute;left:var(--gut);top:var(--top);width:calc(var(--cx) - var(--w) / 2 - var(--gut) * 2 - clamp(24px,3.2vw,60px));display:grid;grid-template-columns:minmax(0,1fr);z-index:4}.tx-ch{grid-area:1/1;opacity:calc(var(--e) * (1 - var(--x)));transform:translateY(calc((1 - var(--e)) * 26px - var(--x) * 22px));pointer-events:none}
+.tx-giant{white-space:nowrap}
+.tx-giant .ln{display:block;overflow:hidden;padding:.06em 0 .14em;margin:-.06em 0 -.14em}
+.tx-giant .ln>span{display:block;transform:translateY(calc((1 - var(--e)) * 115%))}
+.tx-say{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,7fr);gap:var(--gut);margin-top:clamp(28px,6vh,60px);align-items:start}
+.tx-say .lab{padding-top:1.15em;color:var(--soft)}
+.tx-say p{font-size:clamp(20px,2.1vw,34px);line-height:1.18;font-weight:300;letter-spacing:-.034em}
+.tx-w{--k:clamp(0,(var(--q) - .05 - var(--i) / var(--n) * .3) * 10,1);color:color-mix(in srgb,var(--ink) calc(var(--k) * 100%),var(--mute))}
+.tx-idxbox{position:absolute;right:var(--gut);top:calc(var(--top) + .4vw);display:grid;z-index:4}
+.tx-idx{grid-area:1/1;display:grid;place-items:center;min-width:48px;height:28px;padding:0 12px;border:1px solid var(--line);border-radius:99px;font-family:var(--font-mono),ui-monospace,monospace;font-size:11.5px;font-style:normal;color:var(--soft);background:var(--paper);opacity:calc(var(--e) * (1 - var(--x)))}
+
+/* ---------- celular ---------- */
+.tx-ph{position:absolute;left:var(--cx);top:var(--cy);width:var(--w);height:calc(var(--w) * 2.115);margin:calc(var(--w) * -1.0575) 0 0 calc(var(--w) / -2);z-index:3;transform-style:preserve-3d;
+  transform:rotateX(calc(cos(var(--k) * 180deg) * 1.6deg)) rotateY(calc(sin(var(--k) * 180deg) * -11deg))}
+.tx-ph .mxph-front::after{background:linear-gradient(112deg,transparent 30%,rgba(255,255,255,.16) 44%,rgba(255,255,255,.03) 54%,transparent 64%) 0 0/300% 100%;background-position:calc(100% - var(--p) * 100% * 1.4) 0;z-index:12}
+.mxph-dark .mxph-key{background:linear-gradient(90deg,#1b1c1f,#5b5d64 50%,#1a1b1e)}
+.tx-shadow{position:absolute;left:var(--cx);top:calc(var(--cy) + var(--w) * 1.03);width:calc(var(--w) * 1.5);height:calc(var(--w) * .2);transform:translateX(-50%);z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(12,30,26,.36),rgba(12,30,26,.1) 50%,transparent 72%);filter:blur(10px)}
+.tx-layer{position:absolute;inset:0}
+.tx-layer.light .mxph-status{color:#0e0f10}
+.tx-layer.light .mxph-status i{background:#0e0f10}
+.tx-layer.light .mxph-home{background:#0e0f10}
+.tx .mxph-island{z-index:20}
+.tx-layer .mxph-status,.tx-layer .mxph-home{z-index:3}
+
+/* mapa: a rota se traça e os rostos aparecem na ordem em que ela passa por eles (--rd vem do avanço do capítulo "Locais") */
+.tx-layer{--rd:clamp(0,calc((var(--q3) - .12) * 2.4),1)}
+.tx-route{stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--rd))}
+.tx-pin{--v:clamp(0,calc((var(--rd) - var(--at)) * 8),1);opacity:var(--v);scale:calc(.55 + var(--v) * .45)}
+.tx-p0{--at:0;transform-origin:50% 100%}
+.tx-p1{--at:.31}
+.tx-p2{--at:.59}
+.tx-p3{--at:.84}
+.tx-dest{opacity:clamp(0,calc((var(--rd) - .86) * 7),1)}
+.tx-halo{opacity:calc(clamp(0,calc((var(--rd) - .86) * 7),1) * .14)}
+.tx-ping{transform-box:fill-box;transform-origin:center;animation:tx-ping 2.6s ease-out infinite}
+@keyframes tx-ping{0%{transform:scale(.7);opacity:.9}70%,100%{transform:scale(1.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.tx-ping{animation-name:tx-breathe}@keyframes tx-breathe{0%,100%{opacity:.15}50%{opacity:.85}}}
+
+/* anéis de compatibilidade: enchem enquanto o trecho aparece */
+.tx-r1{stroke-dasharray:calc(156 * var(--v)) 170}
+.tx-r2{stroke-dasharray:calc(119 * var(--v)) 170}
+
+/* ---------- trechos ampliados da tela ---------- */
+.tx-chips{position:absolute;left:calc(var(--cx) + var(--w) / 2 + 22px);top:var(--cy);transform:translateY(-50%);z-index:5;pointer-events:none}
+.tx-cs{display:grid;zoom:var(--cs)}
+.tx-cg{grid-area:1/1;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.tx-chip{--v:clamp(0,calc((var(--e) - .28 - var(--i) * .14) * 2),1);font-family:var(--font-outfit),system-ui,sans-serif;opacity:calc(var(--v) * (1 - var(--x)));transform:translate3d(calc((1 - var(--v)) * 44px),calc((var(--q) - .5) * -30px - var(--x) * 14px),0);filter:drop-shadow(0 26px 28px rgba(10,40,35,.2)) drop-shadow(0 3px 5px rgba(10,40,35,.1))}
+.tx-chip.flat{filter:none}
+.tx-chip:nth-child(2){margin-left:34px}
+.tx-chip:nth-child(3){margin-left:12px}
+.tx-chip-in{overflow:hidden}
+.tx-chip-in a{color:#05caad}
+.tx-chip *{box-sizing:content-box}
+
+/* ---------- dock de capítulos ---------- */
+.tx-dock{position:absolute;left:0;right:0;bottom:clamp(14px,3.4vh,32px);z-index:10;display:flex;justify-content:center;align-items:center;gap:12px;padding:0 12px;font-size:clamp(12.5px,.95vw,15px)}
+.tx-tabs{display:flex;padding:.28em;border-radius:99px;background:#f0f0ec;box-shadow:inset 0 0 0 1px rgba(10,30,26,.07)}
+.tx-tabs button{position:relative;font:inherit;color:#7d8682;background:none;border:0;margin:0;padding:.82em 1.1em;border-radius:99px;font-weight:500;letter-spacing:-.005em;white-space:nowrap;cursor:pointer;--f:clamp(0,calc(var(--k,0) - var(--j,0)),1)}
+.tx-tabs button span{position:relative;z-index:1}
+.tx-tabs button.past{color:#3b4744}
+.tx-tabs button.on{color:var(--ink)}
+.tx-tabs button.on::before{content:"";position:absolute;inset:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1px rgba(10,30,26,.08);clip-path:inset(0 calc((1 - var(--f)) * 100%) 0 0 round 99px)}
+.tx-tabs button:hover{color:var(--ink)}
+.tx-tabs button:focus-visible,.tx-skip:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.tx-skip,.mx a.tx-skip,.mx a.tx-skip:hover{display:block;padding:1.28em 1.5em;border-radius:99px;background:var(--ink);color:#fff;font-weight:600;white-space:nowrap}
+
+@media (max-width:1180px){.tx-say{grid-template-columns:1fr;gap:12px}.tx-say .lab{padding-top:0}}
+
+/* ---------- telas pequenas: texto em cima, celular embaixo, sem trechos flutuantes ---------- */
+@media (max-width:900px){
+  .tx-stage{--w:min(26vh,46vw);--cx:50%;--cy:65%}
+  .tx-stage{--top:clamp(72px,10vh,96px)}
+  .tx-copy{right:var(--gut);width:auto}
+  .tx-say{grid-template-columns:1fr;gap:12px;margin-top:18px}
+  .tx-say .lab{padding-top:0}
+  .tx-say p{font-size:18px}
+  .tx-idxbox{display:none}
+  .tx-chips{display:none}
+  .tx-tabs button:not(.on){display:none}
+  .tx-dock{font-size:13px;bottom:2.4vh}
+}

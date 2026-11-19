@@ -1,0 +1,22 @@
+/* Seção "Na mão" — mesmo visual da seção Ritmo (classes .mx-cl-*), com a mão 3D (embed da Thrine) à direita. */
+
+.mao-wrap{padding-bottom:0}
+.mao-wrap::before{display:none}
+.mao{min-height:100vh;display:flex;align-items:center}
+.mao-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--gut);width:100%}
+.mao-giant{white-space:nowrap}
+.mao-say{grid-template-columns:minmax(0,2fr) minmax(0,7fr)}
+.mao-say p{font-size:clamp(18px,1.75vw,29px)}
+.mx-cl .mao-cta,.mx-cl .mao-cta:hover{display:inline-flex;align-items:center;gap:12px;margin-top:clamp(20px,3.6vh,36px);padding:11px 16px 11px 18px;border-radius:5px;background:#ececeb;color:var(--ink);font-size:13.5px;font-weight:600;letter-spacing:-.005em;text-decoration:none;transition:background .25s}
+.mx-cl .mao-cta:hover{background:#e2e3e2}
+.mao-cta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.mao-cta:hover svg{transform:translateX(4px)}
+/* a mão: no máximo 80% da altura da tela, na proporção do embed (292 : 394) */
+.mao-embed{width:min(34vw,calc(80vh * 292 / 394),520px)}
+.mao-frame{display:block;width:100%;aspect-ratio:292 / 394;border:0;background:transparent;mix-blend-mode:multiply}
+
+@media (max-width:1180px){.mao-say{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .mao-grid{grid-template-columns:1fr}
+  .mao-embed{width:min(78vw,420px);margin:0 auto}
+}
