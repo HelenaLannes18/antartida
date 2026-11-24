@@ -7,6 +7,9 @@ type Errors = Partial<Record<"nome" | "email" | "telefone", string>>;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+// caixa de entrada que recebe os contatos
+const INBOX = "appsquadfit@gmail.com";
+
 /** (11) 98765-4321 enquanto digita; números com +55 ou mais de 11 dígitos ficam só com dígitos. */
 function maskPhone(raw: string) {
   const d = raw.replace(/\D/g, "").slice(0, 13);
@@ -50,19 +53,49 @@ export default function Contato() {
 
     setStatus("sending");
     const data = new FormData(ev.currentTarget);
+    const first = nome.trim().split(/\s+/)[0];
+
+    // campo-isca preenchido = robô: finge que deu certo e não manda nada
+    if (data.get("empresa")) {
+      setDone(first);
+      setStatus("ok");
+      return;
+    }
+
     try {
-      const res = await fetch("/api/contato", {
+      // 1) registro de segurança no servidor (Runtime Logs da Vercel); só interrompe se o servidor recusar os dados
+      const saved = await fetch("/api/contato", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, telefone, empresa: data.get("empresa") }),
+        body: JSON.stringify({ nome, email, telefone }),
+      }).catch(() => null);
+      if (saved && saved.status === 422) {
+        const json = (await saved.json().catch(() => ({}))) as { errors?: Errors };
+        if (json.errors) setErrors(json.errors);
+        setStatus("error");
+        return;
+      }
+
+      // 2) o e-mail para a equipe sai do navegador: o FormSubmit bloqueia pedidos vindos de servidores
+      const res = await fetch(`https://formsubmit.co/ajax/${INBOX}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `SquadFit: novo contato de ${nome.trim()}`,
+          _template: "table",
+          _captcha: "false",
+          Nome: nome.trim(),
+          Email: email.trim(),
+          Telefone: telefone || "(não informado)",
+          Quando: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
+        }),
       });
-      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; errors?: Errors };
-      if (res.ok && json.ok) {
-        setDone(nome.trim().split(/\s+/)[0]);
+      const json = (await res.json().catch(() => ({}))) as { success?: unknown };
+      if (res.ok && json.success !== false && json.success !== "false") {
+        setDone(first);
         setStatus("ok");
         return;
       }
-      if (json.errors) setErrors(json.errors);
       setStatus("error");
     } catch {
       setStatus("error");

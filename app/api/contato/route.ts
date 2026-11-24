@@ -4,17 +4,12 @@ type Body = { nome?: unknown; email?: unknown; telefone?: unknown; empresa?: unk
 
 const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
-// caixa de entrada que recebe os contatos (dá para trocar sem mexer no código: variável CONTACT_EMAIL na Vercel)
-const DEFAULT_INBOX = "appsquadfit@gmail.com";
-
-// O FormSubmit ativa o formulário por ORIGEM (site que envia). Cada deploy da Vercel tem uma URL diferente, então
-// usar a origem real pediria uma ativação nova a cada deploy. Enviamos sempre com esta origem fixa, já ativada.
-const FORM_ORIGIN = "http://localhost:3000";
-
 /**
- * Recebe o formulário "avise-me quando lançar" e entrega por e-mail (via FormSubmit, que não pede cadastro).
- * Se CONTACT_WEBHOOK_URL estiver definida (Zapier, Make, Slack, Discord...), o contato vai para lá em vez do e-mail.
- * Se a entrega falhar, o contato ainda fica nos logs da Vercel (Runtime Logs) para não se perder.
+ * Valida e GUARDA o contato do formulário "avise-me quando lançar".
+ *
+ * O e-mail para appsquadfit@gmail.com é enviado pelo navegador (ver Contato.tsx), porque o FormSubmit bloqueia
+ * pedidos vindos dos servidores da Vercel (403). Esta rota é o registro de segurança: todo contato válido fica nos
+ * Runtime Logs da Vercel, e, se CONTACT_WEBHOOK_URL estiver definida (Zapier, Make, Slack, Discord...), segue para lá também.
  */
 export async function POST(request: Request) {
   let body: Body;
@@ -39,40 +34,22 @@ export async function POST(request: Request) {
   if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
 
   const lead = { nome, email, telefone: telefone || null, origem: "site", quando: new Date().toISOString() };
+  console.log("[contato] novo contato", JSON.stringify(lead));
 
-  const text = `Novo contato SquadFit: ${nome} · ${email}${telefone ? ` · ${telefone}` : ""}`;
   const hook = process.env.CONTACT_WEBHOOK_URL;
-  const inbox = process.env.CONTACT_EMAIL || DEFAULT_INBOX;
-
-  try {
-    const res = hook
-      ? await fetch(hook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          // `text` e `content` fazem Slack e Discord aceitarem a mesma mensagem
-          body: JSON.stringify({ ...lead, text, content: text }),
-          signal: AbortSignal.timeout(8000),
-        })
-      : await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(inbox)}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json", Origin: FORM_ORIGIN, Referer: `${FORM_ORIGIN}/` },
-          body: JSON.stringify({
-            _subject: `SquadFit: novo contato de ${nome}`,
-            _template: "table",
-            _captcha: "false",
-            Nome: nome,
-            Email: email,
-            Telefone: telefone || "(não informado)",
-            Quando: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
-          }),
-          signal: AbortSignal.timeout(10000),
-        });
-    const reply = (await res.json().catch(() => ({}))) as { success?: unknown; message?: string };
-    if (!res.ok || reply.success === false || reply.success === "false") throw new Error(`entrega recusada (${res.status}): ${reply.message ?? ""}`);
-  } catch (err) {
-    // o contato não se perde: fica nos Runtime Logs da Vercel mesmo se o e-mail falhar
-    console.error("[contato] falha na entrega", err, JSON.stringify(lead));
-    return Response.json({ ok: false, error: "Não deu para enviar agora. Tente de novo em instantes.", detail: String(err).slice(0, 300) }, { status: 502 });
+  if (hook) {
+    const text = `Novo contato SquadFit: ${nome} · ${email}${telefone ? ` · ${telefone}` : ""}`;
+    try {
+      // `text` e `content` fazem Slack e Discord aceitarem a mesma mensagem
+      await fetch(hook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...lead, text, content: text }),
+        signal: AbortSignal.timeout(8000),
+      });
+    } catch (err) {
+      console.error("[contato] webhook falhou", err);
+    }
   }
 
   return Response.json({ ok: true });
