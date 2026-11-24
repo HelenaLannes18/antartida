@@ -72,7 +72,7 @@ export async function POST(request: Request) {
   } catch (err) {
     // o contato não se perde: fica nos Runtime Logs da Vercel mesmo se o e-mail falhar
     console.error("[contato] falha na entrega", err, JSON.stringify(lead));
-    return Response.json({ ok: false, error: "Não deu para enviar agora. Tente de novo em instantes." }, { status: 502 });
+    return Response.json({ ok: false, error: "Não deu para enviar agora. Tente de novo em instantes.", detail: String(err).slice(0, 300) }, { status: 502 });
   }
 
   return Response.json({ ok: true });
