@@ -167,14 +167,14 @@ export default function Difference() {
   const cur = open === null ? null : SPOTS[open];
 
   return (
-    <section id="diferenca" className="mx-dif" aria-label="A diferença FitMatch">
+    <section id="diferenca" className="mx-dif" aria-label="A diferença SquadFit">
       <noscript>
         <style>{".mx-dif-stage{--a:1!important;--t:1!important;--h:1!important}.mx-dif-pin{height:auto!important}"}</style>
       </noscript>
       <div ref={pin} className="mx-dif-pin" style={{ "--len": 4.8 } as CSSProperties}>
         <div ref={stage} className="mx-dif-stage">
           <div className="mx-dif-copy">
-            <h2 className="mx-cl-giant mx-dif-giant" aria-label="A diferença FitMatch">
+            <h2 className="mx-cl-giant mx-dif-giant" aria-label="A diferença SquadFit">
               <span className="ln" aria-hidden="true"><span>Diferença</span></span>
             </h2>
             <div className="mx-dif-say" style={{ "--n": TEXT.split(" ").length } as CSSProperties}>

@@ -1,4 +1,4 @@
-/* Telas e trechos de tela do aplicativo FitMatch, gerados a partir do protótipo (FitMatch.html): a marcação e os estilos
+/* Telas e trechos de tela do aplicativo SquadFit, gerados a partir do protótipo (FitMatch.html): a marcação e os estilos
    são os do protótipo (390×844 px), sem a lógica. As telas são "Scr…" e os trechos ampliados, "Chip…". */
 
 export function ScrInicio() {
@@ -937,7 +937,7 @@ export function ScrAgenda() {
               Sua semana
             </span>
           </div>
-          <a aria-label="Novo treino ou rolê" style={{ width: 48, height: 48, borderRadius: "50%", background: "rgb(14, 15, 16)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <a aria-label="Novo treino ou encontro" style={{ width: 48, height: 48, borderRadius: "50%", background: "rgb(14, 15, 16)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#05caad" strokeWidth="2.2" strokeLinecap="round">
               <path d="M12 5v14M5 12h14"></path>
             </svg>
@@ -1580,7 +1580,7 @@ export function ChipContatos() {
             Localização ao vivo
           </span>
           <span style={{ fontSize: 12, color: "rgb(107, 109, 114)" }}>
-            {"Só durante o rolê · e \"cheguei bem\" no fim"}
+            {"Só durante o treino · e \"cheguei bem\" no fim"}
           </span>
         </span>
         <span style={{ flex: "0 0 auto", width: 50, height: 30, padding: 3, boxSizing: "border-box", borderRadius: 999, display: "flex", transition: "background 0.2s", justifyContent: "flex-end", background: "rgb(14, 15, 16)" }}>

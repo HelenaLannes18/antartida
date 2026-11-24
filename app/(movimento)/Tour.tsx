@@ -32,7 +32,7 @@ const st = (o: Record<string, string | number>) => o as CSSProperties;
 /** Trecho ampliado de uma tela do app, que flutua ao lado do celular. `panel` repõe o fundo da tela quando o trecho é claro. */
 type Chip = { C: () => ReactNode; w: number; ink: string; panel?: string; flat?: boolean; fade?: boolean };
 
-/** Etiquetas e atalhos do rolê, juntos sobre o fundo escuro da tela (são claros sobre escuro). */
+/** Etiquetas e atalhos do treino, juntos sobre o fundo escuro da tela (são claros sobre escuro). */
 function GrupoAcoes() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -94,7 +94,7 @@ const CHAPTERS: Chapter[] = [
   {
     tag: "Locais",
     label: "Segurança",
-    text: "Sua rota só com quem você escolhe. Compartilhe o trajeto e a localização ao vivo apenas durante o rolê, e avise quem se importa quando chegar bem.",
+    text: "Sua rota só com quem você escolhe. Compartilhe o trajeto e a localização ao vivo apenas durante o treino, e avise quem se importa quando chegar bem.",
     Screen: ScrMapa,
     light: false,
     chips: [
@@ -105,7 +105,7 @@ const CHAPTERS: Chapter[] = [
   {
     tag: "Agenda",
     label: "Semana",
-    text: "Treinos marcados, rolês em grupo e a meta semanal num só lugar, com lembrete uma hora antes de cada saída e sugestão de dupla quando falta um treino.",
+    text: "Treinos marcados, saídas em grupo e a meta semanal num só lugar, com lembrete uma hora antes de cada saída e sugestão de dupla quando falta um treino.",
     Screen: ScrAgenda,
     light: true,
     chips: [
@@ -116,7 +116,7 @@ const CHAPTERS: Chapter[] = [
   {
     tag: "Grupos",
     label: "Comunidade",
-    text: "Pelada, escalada ou skate: vagas, nível, rachadinha e caronas resolvidos no mesmo lugar, com fila de espera quando o rolê lota.",
+    text: "Pelada, escalada ou skate: vagas, nível, rachadinha e caronas resolvidos no mesmo lugar, com fila de espera quando o grupo lota.",
     Screen: ScrEvento,
     light: false,
     chips: [

@@ -20,6 +20,7 @@ import ClNumeros from "./ClNumeros";
 import ClApp from "./ClApp";
 import Modalidades from "./Modalidades";
 import Tour from "./Tour";
+import Contato from "./Contato";
 
 /** Só entram na montagem os vídeos que existem em /public; a capa só vale se o arquivo existir. */
 function availableClips(): Clip[] {
@@ -45,21 +46,21 @@ export default function Movimento() {
         <section id="world" className="mx-scene mx-world" data-scene data-sticky style={len(6)}>
           <div className="mx-stick mx-world-stage">
             <DotMap />
-            <h2 className="mx-world-intro" aria-label="Onde treinamos">
-              ONDE
+            <h2 className="mx-world-intro" aria-label="Para onde vamos">
+              PARA ONDE
               <br />
-              TREINAMOS
+              VAMOS
             </h2>
-            <p className="mx-world-tag">(01) Comunidade global</p>
+            <p className="mx-world-tag">(01) Rumo ao mundo</p>
             <div className="mx-world-foot">
               <h2 className="mx-world-title">
-                Gente treinando
+                Um esquadrão
                 <br />
-                em todo o mundo.
+                em cada cidade.
               </h2>
               <p className="mx-world-copy">
-                De São Paulo para oito cidades em cinco continentes: cada ponto é um lugar onde a comunidade FitMatch
-                já combinou trilhas, ondas, corridas e treinos.
+                O SquadFit nasce em São Paulo com uma ideia simples: ninguém deveria treinar sozinho. Cada ponto no
+                mapa é uma cidade que queremos conectar, com gente do seu nível, no seu ritmo e pronta para treinar junto.
               </p>
             </div>
           </div>
@@ -94,8 +95,27 @@ export default function Movimento() {
         {/* NOSSAS EXPEDIÇÕES */}
         <Expedicoes />
 
+        {/* CONTATO: lista de espera até o app ser lançado (é o destino de todos os "Criar perfil") */}
+        <section id="comecar" className="ct" aria-labelledby="ct-title">
+          <div className="ct-wrap">
+            <div>
+              <p className="ct-tag">
+                <i aria-hidden="true" />
+                App em breve
+              </p>
+              <h2 id="ct-title" className="ct-title">
+                Seja dos primeiros a <span>treinar com a gente.</span>
+              </h2>
+              <p className="ct-copy">
+                O SquadFit ainda está sendo finalizado. Deixe seu contato e avisamos você assim que o app for lançado.
+              </p>
+            </div>
+            <Contato />
+          </div>
+        </section>
+
         {/* RODAPÉ */}
-        <footer id="comecar" className="mx-ft">
+        <footer id="rodape" className="mx-ft">
           <svg className="mx-ft-mtn" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
             <defs>
               <filter id="mx-cloud" x="-5%" y="-5%" width="110%" height="110%">
@@ -127,7 +147,7 @@ export default function Movimento() {
           </svg>
           <div className="mx-ft-grid">
             <div>
-              <p className="mx-ft-logo">FitMatch</p>
+              <p className="mx-ft-logo">SquadFit</p>
               <FooterStats />
             </div>
 
@@ -137,7 +157,7 @@ export default function Movimento() {
               <Link href="/esportes">Esportes</Link>
               <a href="#world">Comunidade</a>
               <a href="#como-funciona">Como funciona</a>
-              <a href="#comecar">Criar perfil</a>
+              <a href="#comecar">Avise-me no lançamento</a>
             </nav>
 
             <div className="mx-ft-info">
@@ -156,12 +176,12 @@ export default function Movimento() {
               </div>
               <a href="#comecar">Instagram</a>
               <a href="#comecar">Política de privacidade</a>
-              <p className="mx-ft-copy">© 2026 FitMatch</p>
+              <p className="mx-ft-copy">© 2026 SquadFit</p>
             </div>
           </div>
 
           <svg className="mx-ft-word" viewBox="0 0 1000 150" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
-            <text x="0" y="140" textLength="1000" lengthAdjust="spacingAndGlyphs">FITMATCH</text>
+            <text x="0" y="140" textLength="1000" lengthAdjust="spacingAndGlyphs">SQUADFIT</text>
           </svg>
         </footer>
       </div>

@@ -1,0 +1,56 @@
+/* Formulário de contato ("avise-me quando lançar") — classes com prefixo .ct
+   Mesma linguagem do hero: fundo quase preto, título Archivo pesado, rótulos em mono de caixa alta, teal como único acento. */
+
+.ct{--ct-bg:#05080a;--ct-surface:#0e1416;--ct-line:rgba(255,255,255,.14);--ct-muted:rgba(255,255,255,.62);position:relative;z-index:5;background:var(--ct-bg);color:#fff;padding:clamp(72px,12vh,150px) clamp(20px,4.4vw,84px) calc(clamp(72px,12vh,150px) + env(safe-area-inset-bottom,0px));font-family:var(--font-grotesk),system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:clip}
+.ct :where(h2,h3,p){margin:0}
+.ct-wrap{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(36px,6vw,110px);align-items:start}
+
+.ct-tag{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid var(--ct-line);border-radius:99px;font-family:var(--font-hero-mono),var(--font-mono),ui-monospace,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.ct-tag i{width:8px;height:8px;border-radius:50%;background:#05caad;box-shadow:0 0 0 4px rgba(5,202,173,.18)}
+.ct-title{margin-top:clamp(20px,3vh,32px);font-family:var(--font-archivo),var(--font-grotesk),system-ui,sans-serif;font-weight:800;font-size:clamp(2.2rem,5.4vw,5.6rem);line-height:1;text-transform:uppercase;text-wrap:balance}
+.ct-title span{color:#05caad}
+.ct-copy{margin-top:clamp(18px,3vh,30px);max-width:44ch;font-size:clamp(15px,1.15vw,19px);line-height:1.55;color:var(--ct-muted)}
+
+/* ---------- formulário ---------- */
+.ct-form{display:flex;flex-direction:column;gap:18px;padding:clamp(22px,2.6vw,40px);border:1px solid var(--ct-line);border-radius:clamp(18px,1.6vw,28px);background:var(--ct-surface)}
+.ct-f{display:flex;flex-direction:column;gap:9px}
+.ct-l{font-family:var(--font-hero-mono),var(--font-mono),ui-monospace,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.ct-l small{margin-left:8px;font-size:11px;letter-spacing:.06em;color:var(--ct-muted)}
+.ct-f input{width:100%;min-height:54px;padding:0 18px;border:1px solid var(--ct-line);border-radius:14px;background:rgba(255,255,255,.04);color:#fff;font:inherit;font-size:16px;line-height:1.2;outline:0;-webkit-appearance:none;appearance:none;transition:border-color .2s,background .2s,box-shadow .2s}
+.ct-f input::placeholder{color:rgba(255,255,255,.34)}
+.ct-f input:hover{border-color:rgba(255,255,255,.28)}
+.ct-f input:focus-visible{border-color:#05caad;background:rgba(5,202,173,.07);box-shadow:0 0 0 3px rgba(5,202,173,.22)}
+.ct-f input[aria-invalid="true"]{border-color:#ff7a6b;background:rgba(255,122,107,.07)}
+.ct-f input:-webkit-autofill{-webkit-text-fill-color:#fff;box-shadow:0 0 0 100px #0e1416 inset}
+.ct-err{font-style:normal;font-size:13px;line-height:1.3;color:#ff9b8f}
+
+.ct-btn{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;margin-top:6px;padding:0 10px 0 24px;border:0;border-radius:99px;background:#05caad;color:#03231e;font-family:var(--font-hero-mono),var(--font-mono),ui-monospace,monospace;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .25s,transform .25s}
+.ct-btn b{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#03231e;color:#05caad;font-size:18px;font-weight:400;transition:transform .25s}
+.ct-btn:hover{background:#2ce0c6}
+.ct-btn:hover b{transform:translateX(3px)}
+.ct-btn:active{transform:scale(.985)}
+.ct-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.ct-btn:disabled{opacity:.7;cursor:progress}
+.ct-fail{padding:12px 14px;border-radius:12px;background:rgba(255,122,107,.12);color:#ffb3a9;font-size:14px;line-height:1.4}
+.ct-note{font-size:13px;line-height:1.45;color:var(--ct-muted)}
+
+/* isca anti-robô */
+.ct-hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* ---------- enviado ---------- */
+.ct-done{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:clamp(26px,3vw,44px);border:1px solid rgba(5,202,173,.4);border-radius:clamp(18px,1.6vw,28px);background:rgba(5,202,173,.08)}
+.ct-done-mark{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#05caad;color:#03231e}
+.ct-done-mark svg{width:26px;height:26px}
+.ct-done h3{font-family:var(--font-archivo),var(--font-grotesk),system-ui,sans-serif;font-weight:800;font-size:clamp(1.7rem,2.6vw,2.6rem);line-height:1.05;text-transform:uppercase}
+.ct-done p{max-width:38ch;font-size:16px;line-height:1.5;color:var(--ct-muted)}
+
+/* ---------- celular ---------- */
+@media (max-width:860px){
+  .ct{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .ct-wrap{grid-template-columns:minmax(0,1fr);gap:32px}
+  .ct-form{padding:20px 18px;gap:16px}
+  .ct-title{font-size:clamp(2.1rem,10.6vw,3.4rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  .ct-f input,.ct-btn,.ct-btn b{transition:none}
+}

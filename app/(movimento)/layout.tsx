@@ -8,6 +8,7 @@ import "./clean.css";
 import "./modalidades.css";
 import "./tour.css";
 import "./mao.css";
+import "./contato.css";
 
 const grotesk = Inter_Tight({
   variable: "--font-grotesk",
@@ -56,7 +57,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "FitMatch",
+  title: "SquadFit",
   description: "Trilha, surfe, neve, pista e academia: o mundo é o seu lugar de treinar. Encontre o esporte e as pessoas certas.",
 };
 

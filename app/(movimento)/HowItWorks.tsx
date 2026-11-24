@@ -103,7 +103,7 @@ function Gallery() {
           <DragableCarousel
             ref={car}
             onRequestPosition={request}
-            label="Esportes do FitMatch"
+            label="Esportes do SquadFit"
             images={GALLERY.map((g) => g.src)}
             alts={GALLERY.map((g) => g.alt)}
             slideWidth={Math.round(h / 1.2)}
@@ -128,9 +128,9 @@ export default function HowItWorks() {
       <Gallery />
 
       <ScrollZoomReveal
-        image="/media/movimento/montanha.jpg"
-        imageAlt="Pessoa de braços abertos no alto de uma montanha nevada"
-        videoUrl="/media/movimento/montanha.mp4"
+        image="/media/esportes/corrida.jpg"
+        imageAlt="Corredor treinando em uma pista de atletismo"
+        videoUrl="/media/esportes/corrida.mp4"
       />
     </section>
   );

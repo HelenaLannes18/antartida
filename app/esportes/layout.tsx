@@ -15,7 +15,7 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "FitMatch — Seu ritmo",
+  title: "SquadFit — Seu ritmo",
   description: "Ciclismo, surfe, esqui e corrida: encontre o esporte e as pessoas certas para o seu ritmo.",
 };
 

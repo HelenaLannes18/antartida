@@ -4,7 +4,7 @@
    com colchetes colados, réguas nas laterais e uma fita cassete no canto. */
 
 .mv-root{--accent:#05caad;--cursor:#05b79d;--paper:#fff;--gut:clamp(22px,5.1vw,98px);--pad:clamp(20px,3.1vw,60px);--rh:clamp(150px,32svh,300px);background:#05080a}
-.mv{position:relative;height:100svh;min-height:540px;overflow:hidden;overflow:clip;isolation:isolate;background:#05080a;color:#fff;font-family:var(--font-grotesk),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.mv{position:relative;height:100vh;height:100svh;min-height:540px;overflow:hidden;overflow:clip;isolation:isolate;background:#05080a;color:#fff;font-family:var(--font-grotesk),system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .mv *{box-sizing:border-box}
 .mv a,.mv a:hover{color:inherit;text-decoration:none}
 .mv :where(button){font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -51,7 +51,7 @@
 /* ---------- fita cassete (liga e desliga a trilha) ---------- */
 .mv-tape{position:absolute;right:clamp(14px,2.5vw,48px);bottom:clamp(52px,3.1vw,60px);z-index:8;width:clamp(78px,5.9vw,112px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .mv-tape svg{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
-.mv-tape:hover{transform:translateY(-3px) rotate(-2.5deg)}
+@media (hover:hover){.mv-tape:hover{transform:translateY(-3px) rotate(-2.5deg)}}
 .mv-hub{transform-box:fill-box;transform-origin:center}
 .mv-tape.is-on .mv-hub{animation:mv-spin 2.6s linear infinite}
 @keyframes mv-spin{to{transform:rotate(360deg)}}
@@ -77,16 +77,36 @@
 
 /* ---------- telas estreitas ---------- */
 @media (max-width:760px){
-  .mv{--gut:22px;--pad:20px}
+  .mv{--gut:max(22px,env(safe-area-inset-left,0px));--pad:max(20px,env(safe-area-inset-left,0px))}
+  .mv-top{padding-top:max(14px,env(safe-area-inset-top,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .mv-logo svg{width:34px}
+  .mv-logo b{font-size:15px}
   .mv-ruler{display:none}
-  .mv-nav a:last-child{display:none}
-  .mv-hero{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(max(88px,13svh) + 28px);z-index:5;display:flex;flex-direction:column;gap:16px}
+  /* os dois links cabem no celular; cada um com área de toque de 44px */
+  .mv-nav{gap:4px;font-size:11.5px;margin-right:-8px}
+  .mv-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px}
+  .mv-hero{position:absolute;left:var(--gut);right:var(--gut);bottom:calc(max(88px,13svh) + 28px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-direction:column;gap:16px}
   .mv-title{position:static;font-size:clamp(2.2rem,11.2vw,3.7rem)}
   .mv-cap{position:static;order:-1;flex-direction:row;align-items:baseline;gap:1.3em;font-size:12px;text-align:left}
-  .mv-tagline{left:var(--gut);right:auto;bottom:22px;max-width:calc(100% - var(--gut) - 104px);text-align:left;font-size:11px}
-  .mv-tape{width:76px;right:16px;bottom:16px}
+  .mv-tagline{left:var(--gut);right:auto;bottom:calc(22px + env(safe-area-inset-bottom,0px));max-width:calc(100% - var(--gut) - 104px);text-align:left;font-size:11px}
+  .mv-tape{width:76px;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}
   .mv-tape-tip{display:none}
-  .mv-play{bottom:76px}
+  .mv-play{bottom:calc(76px + env(safe-area-inset-bottom,0px));min-height:44px;display:flex;align-items:center}
+  .mv-pre{font-size:13px}
+  .mv-pre p{padding:0 20px}
+}
+/* celulares muito estreitos (320px): sem o "Esportes" no topo para o logo não apertar */
+@media (max-width:359px){
+  .mv-nav a:first-child{display:none}
+  .mv-title{font-size:2.05rem}
+}
+/* celular deitado: pouca altura, então o título encolhe e o resto se ajusta */
+@media (max-height:520px) and (orientation:landscape){
+  .mv{min-height:0}
+  .mv-title{font-size:clamp(1.6rem,9.5svh,2.6rem);bottom:max(56px,17svh)}
+  .mv-cap{top:calc(51.4% - var(--rh) / 2 - 1.6em)}
+  .mv-tagline{display:none}
+  .mv-tape{width:64px;bottom:12px}
 }
 
 /* menos movimento: sem zoom e sem giro — a montagem continua, e há botão para pausar */

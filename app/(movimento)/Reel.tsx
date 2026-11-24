@@ -74,7 +74,7 @@ function Cassette() {
       <rect x="9" y="8" width="102" height="26" rx="3" fill="#f7f2e4" />
       <rect x="9" y="8" width="102" height="7" rx="3" fill="#05caad" />
       <text x="14" y="28" fontSize="7.4" fontFamily="ui-monospace,monospace" fontWeight="700" letterSpacing=".6" fill="#1d1a16">
-        FITMATCH MIX
+        SQUADFIT MIX
       </text>
       <circle cx="99" cy="25" r="6.2" fill="#1d1a16" />
       <text x="99" y="27.6" fontSize="6.4" fontFamily="ui-monospace,monospace" fontWeight="700" textAnchor="middle" fill="#f7f2e4">
@@ -221,13 +221,13 @@ export default function Reel({ clips }: { clips: Clip[] }) {
 
       <div className="mv-stage" inert={!live}>
         <header className="mv-top">
-          <Link className="mv-logo" href="/" aria-label="FitMatch — início">
+          <Link className="mv-logo" href="/" aria-label="SquadFit — início">
             <Mark />
-            <b>FitMatch</b>
+            <b>SquadFit</b>
           </Link>
           <nav className="mv-nav" aria-label="Principal">
             <Link href="/esportes">Esportes</Link>
-            <a href="#comecar">Criar perfil</a>
+            <a href="#comecar">Avise-me</a>
           </nav>
         </header>
 

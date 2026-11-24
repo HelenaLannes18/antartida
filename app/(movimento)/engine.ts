@@ -71,6 +71,8 @@ export class Montage {
     const c = this.clips[index];
     v.dataset.clip = String(index);
     v.poster = c.poster ?? "";
+    v.muted = true; // iOS só deixa tocar sozinho se a propriedade estiver ligada (o atributo do React não basta)
+    v.style.objectPosition = `${c.focus ?? 50}% 50%`;
     v.src = `${c.src}#t=${c.start}`; // o #t= faz o vídeo já abrir no trecho escolhido
     v.load();
   }

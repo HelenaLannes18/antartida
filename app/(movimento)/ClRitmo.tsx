@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 
 const TEXT =
-  "Pensado em torno do seu pace, do seu nível e do seu horário. O FitMatch compara cada sinal a cada treino e mostra quem realmente corre, nada ou caminha no mesmo passo que você.";
+  "Pensado em torno do seu pace, do seu nível e do seu horário. O SquadFit compara cada sinal a cada treino e mostra quem realmente corre, nada ou caminha no mesmo passo que você.";
 
 /** Palavra gigante e frase que escurece palavra por palavra conforme a seção sobe na tela. */
 export default function ClRitmo() {

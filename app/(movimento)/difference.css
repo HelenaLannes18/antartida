@@ -1,4 +1,4 @@
-/* "A diferença FitMatch" — o celular em 3D gira ao rolar, o texto entra e três pontos "+" abrem os detalhes.
+/* "A diferença SquadFit" — o celular em 3D gira ao rolar, o texto entra e três pontos "+" abrem os detalhes.
    Prefixos: .mx-dif (seção), .mx-hs (pontos de detalhe), .mxm (tela do app dentro do celular).
    Variáveis escritas pelo <Difference />: --p (progresso da pista), --a (giro do celular), --t (texto), --h (pontos),
    --sh (reflexo no vidro), --fy/--rx/--ry (flutuação e inclinação com o mouse). */

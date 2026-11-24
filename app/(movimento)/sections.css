@@ -133,7 +133,7 @@
 .mx-ft-word text{font-family:var(--font-grotesk),sans-serif;font-weight:800;font-size:178px}
 @media (max-width:860px){.mx-ft-grid{grid-template-columns:1fr}.mx-ft-info{padding-left:0}.mx-ft{min-height:0;gap:60px}}
 
-/* ---------- ajustes para o FitMatch ---------- */
+/* ---------- ajustes para o SquadFit ---------- */
 
 /* lista de esportes: a imagem que segue o cursor é uma foto */
 .mx-svc-img .pic{background-size:cover;background-position:center}

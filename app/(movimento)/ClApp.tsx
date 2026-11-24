@@ -25,10 +25,10 @@ export default function ClApp() {
 
       <figure className="mx-cl-vid" data-scene>
         <div className="frame">
-          <ClVideo src="/media/movimento/montanha.mp4" poster="/media/movimento/montanha.jpg" />
+          <ClVideo src="/media/movimento/academia-agachamento.mp4" poster="/media/movimento/academia-agachamento.jpg" />
         </div>
         <figcaption>
-          <span className="mx-cl-mono mx-cl-br">Montanha</span>
+          <span className="mx-cl-mono mx-cl-br">Academia</span>
           <span className="mx-cl-mono mx-cl-br">Treino marcado</span>
         </figcaption>
       </figure>

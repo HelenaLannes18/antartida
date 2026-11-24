@@ -335,7 +335,7 @@ export default function Hero({ media }: { media: MediaMap }) {
           </span>
           <a href="#parceiros">Parceiros</a>
           <a href="#treinos">Treinos</a>
-          <a href="#comecar">Criar perfil</a>
+          <a href="/#comecar">Avise-me</a>
         </nav>
       </header>
 
@@ -383,9 +383,9 @@ export default function Hero({ media }: { media: MediaMap }) {
       </button>
 
       <footer className="es-bar">
-        <a className="es-logo" href="#" aria-label="FitMatch">
+        <a className="es-logo" href="#" aria-label="SquadFit">
           <Mark />
-          <b>FitMatch</b>
+          <b>SquadFit</b>
         </a>
         <div ref={lineRef} className="es-line" aria-hidden="true">
           <i />

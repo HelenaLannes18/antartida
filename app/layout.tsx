@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Sans, Oswald } from "next/font/google";
 import "./globals.css";
 
@@ -21,8 +21,15 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+// viewport-fit=cover deixa o site ocupar a tela toda do celular; os recuos do entalhe vêm de env(safe-area-inset-*)
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
-  title: "FitMatch",
+  title: "SquadFit",
   description: "Encontre o esporte e as pessoas certas para treinar.",
 };
 
