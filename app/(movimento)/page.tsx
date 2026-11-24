@@ -59,7 +59,7 @@ export default function Movimento() {
                 em cada cidade.
               </h2>
               <p className="mx-world-copy">
-                O SquadFit nasce em São Paulo com uma ideia simples: ninguém deveria treinar sozinho. Cada ponto no
+                O SquadFit nasce em Juiz de Fora com uma ideia simples: ninguém deveria treinar sozinho. Cada ponto no
                 mapa é uma cidade que queremos conectar, com gente do seu nível, no seu ritmo e pronta para treinar junto.
               </p>
             </div>
