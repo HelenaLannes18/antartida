@@ -7,6 +7,10 @@ const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice
 // caixa de entrada que recebe os contatos (dá para trocar sem mexer no código: variável CONTACT_EMAIL na Vercel)
 const DEFAULT_INBOX = "appsquadfit@gmail.com";
 
+// O FormSubmit ativa o formulário por ORIGEM (site que envia). Cada deploy da Vercel tem uma URL diferente, então
+// usar a origem real pediria uma ativação nova a cada deploy. Enviamos sempre com esta origem fixa, já ativada.
+const FORM_ORIGIN = "http://localhost:3000";
+
 /**
  * Recebe o formulário "avise-me quando lançar" e entrega por e-mail (via FormSubmit, que não pede cadastro).
  * Se CONTACT_WEBHOOK_URL estiver definida (Zapier, Make, Slack, Discord...), o contato vai para lá em vez do e-mail.
@@ -41,7 +45,6 @@ export async function POST(request: Request) {
   const inbox = process.env.CONTACT_EMAIL || DEFAULT_INBOX;
 
   try {
-    const origin = request.headers.get("origin") ?? new URL(request.url).origin;
     const res = hook
       ? await fetch(hook, {
           method: "POST",
@@ -52,7 +55,7 @@ export async function POST(request: Request) {
         })
       : await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(inbox)}`, {
           method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json", Origin: origin, Referer: `${origin}/` },
+          headers: { "Content-Type": "application/json", Accept: "application/json", Origin: FORM_ORIGIN, Referer: `${FORM_ORIGIN}/` },
           body: JSON.stringify({
             _subject: `SquadFit: novo contato de ${nome}`,
             _template: "table",
