@@ -9,7 +9,7 @@ import DotMap from "./DotMap";
 import Services from "./Services";
 import HowItWorks from "./HowItWorks";
 import FooterStats from "./FooterStats";
-import Expedicoes from "./Expedicoes";
+// import Expedicoes from "./Expedicoes";
 import Difference from "./Difference";
 import Mao from "./Mao";
 import ClBar from "./ClBar";
@@ -92,8 +92,9 @@ export default function Movimento() {
         {/* COMO FUNCIONA: carrossel 3D girado pela rolagem + revelação com zoom */}
         <HowItWorks />
 
-        {/* NOSSAS EXPEDIÇÕES */}
+        {/* NOSSAS EXPEDIÇÕES (desativada por enquanto: para voltar, descomente aqui e o import no topo)
         <Expedicoes />
+        */}
 
         {/* CONTATO: lista de espera até o app ser lançado (é o destino de todos os "Criar perfil") */}
         <section id="comecar" className="ct" aria-labelledby="ct-title">
@@ -163,15 +164,12 @@ export default function Movimento() {
             <div className="mx-ft-info">
               <div>
                 <small>E-mail</small>
-                <a href="mailto:contato@exemplo.com">contato@exemplo.com</a>
+                <a href="mailto:appsquadfit@gmail.com">appsquadfit@gmail.com</a>
               </div>
               <div>
                 <small>Localização</small>
                 <address>
-                  Av. Paulista, 1000<br />
-                  Bela Vista<br />
-                  São Paulo, SP<br />
-                  01310-100
+                  Juiz de Fora, MG
                 </address>
               </div>
               <a href="#comecar">Instagram</a>
