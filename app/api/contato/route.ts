@@ -4,10 +4,13 @@ type Body = { nome?: unknown; email?: unknown; telefone?: unknown; empresa?: unk
 
 const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
+// caixa de entrada que recebe os contatos (dá para trocar sem mexer no código: variável CONTACT_EMAIL na Vercel)
+const DEFAULT_INBOX = "appsquadfit@gmail.com";
+
 /**
- * Recebe o formulário "avise-me quando lançar".
- * Se CONTACT_WEBHOOK_URL estiver definida (Zapier, Make, Slack, Discord, Google Apps Script...), cada contato é
- * enviado para lá. Sem ela, o contato fica registrado nos logs da Vercel (Runtime Logs) para não se perder.
+ * Recebe o formulário "avise-me quando lançar" e entrega por e-mail (via FormSubmit, que não pede cadastro).
+ * Se CONTACT_WEBHOOK_URL estiver definida (Zapier, Make, Slack, Discord...), o contato vai para lá em vez do e-mail.
+ * Se a entrega falhar, o contato ainda fica nos logs da Vercel (Runtime Logs) para não se perder.
  */
 export async function POST(request: Request) {
   let body: Body;
@@ -33,24 +36,40 @@ export async function POST(request: Request) {
 
   const lead = { nome, email, telefone: telefone || null, origem: "site", quando: new Date().toISOString() };
 
+  const text = `Novo contato SquadFit: ${nome} · ${email}${telefone ? ` · ${telefone}` : ""}`;
   const hook = process.env.CONTACT_WEBHOOK_URL;
-  if (hook) {
-    const text = `Novo contato SquadFit: ${nome} · ${email}${telefone ? ` · ${telefone}` : ""}`;
-    try {
-      const res = await fetch(hook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // `text` e `content` fazem Slack e Discord aceitarem a mesma mensagem
-        body: JSON.stringify({ ...lead, text, content: text }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (!res.ok) throw new Error(`webhook respondeu ${res.status}`);
-    } catch (err) {
-      console.error("[contato] falha ao enviar ao webhook", err, JSON.stringify(lead));
-      return Response.json({ ok: false, error: "Não deu para enviar agora. Tente de novo em instantes." }, { status: 502 });
-    }
-  } else {
-    console.log("[contato] novo contato", JSON.stringify(lead));
+  const inbox = process.env.CONTACT_EMAIL || DEFAULT_INBOX;
+
+  try {
+    const origin = request.headers.get("origin") ?? new URL(request.url).origin;
+    const res = hook
+      ? await fetch(hook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          // `text` e `content` fazem Slack e Discord aceitarem a mesma mensagem
+          body: JSON.stringify({ ...lead, text, content: text }),
+          signal: AbortSignal.timeout(8000),
+        })
+      : await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(inbox)}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json", Origin: origin, Referer: `${origin}/` },
+          body: JSON.stringify({
+            _subject: `SquadFit: novo contato de ${nome}`,
+            _template: "table",
+            _captcha: "false",
+            Nome: nome,
+            Email: email,
+            Telefone: telefone || "(não informado)",
+            Quando: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
+          }),
+          signal: AbortSignal.timeout(10000),
+        });
+    const reply = (await res.json().catch(() => ({}))) as { success?: unknown; message?: string };
+    if (!res.ok || reply.success === false || reply.success === "false") throw new Error(`entrega recusada (${res.status}): ${reply.message ?? ""}`);
+  } catch (err) {
+    // o contato não se perde: fica nos Runtime Logs da Vercel mesmo se o e-mail falhar
+    console.error("[contato] falha na entrega", err, JSON.stringify(lead));
+    return Response.json({ ok: false, error: "Não deu para enviar agora. Tente de novo em instantes." }, { status: 502 });
   }
 
   return Response.json({ ok: true });
