@@ -55,7 +55,7 @@ const HOLES: Poly[] = [
 ];
 
 export const CITIES = [
-  { name: "São Paulo", lon: -46.6, lat: -23.5 },
+  { name: "Juiz de Fora", lon: -43.35, lat: -21.76 },
   { name: "Nova York", lon: -74, lat: 40.7 },
   { name: "Londres", lon: -0.1, lat: 51.5 },
   { name: "Joanesburgo", lon: 28, lat: -26.2 },

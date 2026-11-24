@@ -128,7 +128,7 @@ export default function DotMap() {
       ctx.fill();
       ctx.globalAlpha = 1;
 
-      // conexões a partir de São Paulo
+      // conexões a partir de Juiz de Fora
       const a = clamp((p - 0.66) / 0.2);
       if (a > 0 && cities.length) {
         const hub = cities[0];
